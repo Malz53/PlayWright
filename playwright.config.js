@@ -8,11 +8,11 @@ const config = ({
   testDir: './tests',
   timeout: 30 * 1000,
   expect: {
-    timeout: 40* 1000
+    timeout: 5000
   },
-  repporter: 'html',
+  reporter: 'html',
   use: {
-   browserName: 'webkit',
+   browserName: 'chromium',
    headless: false
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
   },
