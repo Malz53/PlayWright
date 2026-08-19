@@ -13,7 +13,8 @@ test.only('assignment1', async ({page})=>{
     await password.fill("M@123456m");
     await signInBtn.click();
     await cardTitles.first().waitFor();
-    //or you can use await page.waitForLoadState('networkidle');
+    //or you can use 
+    //await page.waitForLoadState('networkidle');
     const allTitles = await cardTitles.allTextContents();
     console.log(allTitles);
 })
