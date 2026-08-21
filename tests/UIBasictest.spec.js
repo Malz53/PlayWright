@@ -37,10 +37,25 @@ test('Browser Context Playwright Test', async ({browser})=>{
 
 
 
-test('first playwright test', async ({page})=>{
+test.only('UI Controls', async ({page})=>{
     
-    await page.goto("https://google.com");
-    //get title - assertion
-    console.log(await page.title());
-    await expect(page).toHaveTitle("Google");
+    await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+    const userName = page.locator('#username');
+    const signInBtn = page.locator('#signInBtn');
+    const password = page.locator("[type='password']");
+    const dropdown = page.locator("select.form-control");
+    await dropdown.selectOption('Teacher');
+    const radioBtn = page.locator(".radiotextsty");
+
+    await radioBtn.last().click(); 
+    await page.locator("#okayBtn").click();
+    //assertion to check if the radio button is checked
+   await expect(radioBtn.last()).toBeChecked();
+    console.log(await radioBtn.last().isChecked());
+    await page.locator("#terms").click();
+    await expect(page.locator("#terms")).toBeChecked();
+    await page.locator("#terms").uncheck();
+    expect( await page.locator("#terms").isChecked()).toBeFalsy();
+   
+
 })

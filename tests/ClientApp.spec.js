@@ -1,7 +1,7 @@
 const {test, expect} = require('@playwright/test');
 
 
-test.only('assignment1', async ({page})=>{
+test('assignment1', async ({page})=>{
     await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
     console.log(await page.title());
     const cardTitles = page.locator(".card-body b");
