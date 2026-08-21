@@ -37,7 +37,7 @@ test('Browser Context Playwright Test', async ({browser})=>{
 
 
 
-test.only('UI Controls', async ({page})=>{
+test('UI Controls', async ({page})=>{
     
     await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
     const userName = page.locator('#username');
@@ -46,6 +46,7 @@ test.only('UI Controls', async ({page})=>{
     const dropdown = page.locator("select.form-control");
     await dropdown.selectOption('Teacher');
     const radioBtn = page.locator(".radiotextsty");
+    const documentsLink = page.locator("[href*='documents-request']");
 
     await radioBtn.last().click(); 
     await page.locator("#okayBtn").click();
@@ -56,6 +57,23 @@ test.only('UI Controls', async ({page})=>{
     await expect(page.locator("#terms")).toBeChecked();
     await page.locator("#terms").uncheck();
     expect( await page.locator("#terms").isChecked()).toBeFalsy();
-   
+   await expect(documentsLink).toHaveAttribute("class", "blinkingText");
 
+})
+
+test.only('Child Windows', async ({browser})=>{
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+    const documentsLink = page.locator("[href*='documents-request']");
+    const [newPage] = await Promise.all([
+        context.waitForEvent('page'),
+        documentsLink.click(),// listens for new page pending, rejected, fulffilled aka promise     
+]); 
+   const text = await newPage.locator(".red").textContent();
+    const arrayText = text.split("@");
+    const domain = arrayText[1].split(" ")[0];
+    console.log(text);
+    await page.locator("#username").fill(domain);
+    await page.pause();
 })
